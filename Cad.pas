@@ -265,7 +265,12 @@ end;
 
 procedure TForm2.Button9Click(Sender: TObject);
 begin
-consultar.ShowModal;
+    try
+       consultar := Tconsultar.Create(self);
+       consultar.ShowModal;
+    finally
+        FreeAndNil(consultar);
+    end;
 end;
 
 procedure TForm2.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;

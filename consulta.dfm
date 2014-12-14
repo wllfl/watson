@@ -1,9 +1,9 @@
 object consultar: Tconsultar
-  Left = 321
-  Top = 296
+  Left = 325
+  Top = 101
   Caption = 'KPI'
-  ClientHeight = 392
-  ClientWidth = 912
+  ClientHeight = 682
+  ClientWidth = 1276
   Color = clHighlightText
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object consultar: Tconsultar
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   PixelsPerInch = 96
   TextHeight = 13
   object Label1: TLabel
