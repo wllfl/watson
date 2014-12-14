@@ -1,6 +1,6 @@
 object Form2: TForm2
-  Left = 183
-  Top = 172
+  Left = 371
+  Top = 222
   Caption = 'CADASTRO DE ROTA'
   ClientHeight = 698
   ClientWidth = 1446
@@ -1474,11 +1474,11 @@ object Form2: TForm2
       Caption = 'HOR'#193'RIO REAL FIM'
     end
     object Label13: TLabel
-      Left = 550
+      Left = 799
       Top = 212
-      Width = 88
+      Width = 87
       Height = 13
-      Caption = 'PESQUISAR ROTA'
+      Caption = 'INFORME A ROTA'
     end
     object Label14: TLabel
       Left = 1
@@ -1516,11 +1516,25 @@ object Form2: TForm2
       Caption = 'CHEGADA REAL'
     end
     object Label9: TLabel
-      Left = 656
-      Top = 213
-      Width = 87
+      Left = 581
+      Top = 212
+      Width = 168
       Height = 13
-      Caption = 'PESQUISAR DATA'
+      Caption = 'INFORME O INTERVALO DE DATAS'
+    end
+    object Label17: TLabel
+      Left = 535
+      Top = 234
+      Width = 13
+      Height = 13
+      Caption = 'De'
+    end
+    object Label20: TLabel
+      Left = 657
+      Top = 234
+      Width = 17
+      Height = 13
+      Caption = 'At'#233
     end
     object DBEdit2: TDBEdit
       Left = 127
@@ -1581,8 +1595,8 @@ object Form2: TForm2
       TabOrder = 3
     end
     object sair: TButton
-      Left = 809
-      Top = 240
+      Left = 785
+      Top = 151
       Width = 75
       Height = 25
       Caption = 'sair'
@@ -1684,7 +1698,7 @@ object Form2: TForm2
       OnClick = Button4Click
     end
     object edtBuscaRota: TEdit
-      Left = 550
+      Left = 799
       Top = 231
       Width = 88
       Height = 21
@@ -1713,7 +1727,7 @@ object Form2: TForm2
     object Button5: TButton
       Left = 392
       Top = 229
-      Width = 121
+      Width = 109
       Height = 25
       Caption = 'EXPORTAR EXEL'
       TabOrder = 17
@@ -1778,7 +1792,7 @@ object Form2: TForm2
     end
     object DBRadioGroup1: TDBRadioGroup
       Left = 783
-      Top = 182
+      Top = 24
       Width = 101
       Height = 52
       DataField = 'TIPO'
@@ -1845,16 +1859,26 @@ object Form2: TForm2
       DataSource = dm.dtsMonitoramento
       TabOrder = 29
     end
-    object dtpBuscaData: TDateTimePicker
-      Left = 656
+    object dtpDataInicial: TDateTimePicker
+      Left = 554
       Top = 231
-      Width = 105
+      Width = 95
       Height = 21
       Cursor = crHandPoint
       Date = 41987.793260081020000000
       Time = 41987.793260081020000000
       TabOrder = 30
-      OnChange = dtpBuscaDataChange
+      OnChange = dtpDataInicialChange
+    end
+    object dtpDataFinal: TDateTimePicker
+      Left = 683
+      Top = 231
+      Width = 97
+      Height = 21
+      Date = 41987.887338275460000000
+      Time = 41987.887338275460000000
+      TabOrder = 31
+      OnChange = dtpDataFinalChange
     end
   end
   object DBGrid1: TDBGrid

@@ -1,6 +1,6 @@
 object Form4: TForm4
-  Left = 632
-  Top = 381
+  Left = 311
+  Top = 218
   Caption = 'CADASTRO DE ROTA'
   ClientHeight = 701
   ClientWidth = 1368

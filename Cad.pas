@@ -70,7 +70,10 @@ type
     Label9: TLabel;
     DBEdit5: TDBEdit;
     DBEdit15: TDBEdit;
-    dtpBuscaData: TDateTimePicker;
+    dtpDataInicial: TDateTimePicker;
+    dtpDataFinal: TDateTimePicker;
+    Label17: TLabel;
+    Label20: TLabel;
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
     procedure sairClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -90,7 +93,8 @@ type
     procedure Timer1Timer(Sender: TObject);
     procedure Button8Click(Sender: TObject);
     procedure Button9Click(Sender: TObject);
-    procedure dtpBuscaDataChange(Sender: TObject);
+    procedure dtpDataFinalChange(Sender: TObject);
+    procedure dtpDataInicialChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -289,24 +293,44 @@ DMMoni.dm.cdsMonitoramento.Insert;
 DMMoni.dm.cdsMonitoramento.Refresh;
 end;
 
-procedure TForm2.dtpBuscaDataChange(Sender: TObject);
+procedure TForm2.dtpDataFinalChange(Sender: TObject);
 begin
-    dm.cdsMonitoramento.Filtered := False;
-    if edtBuscaRota.Text <> '' then
-       dm.cdsMonitoramento.Filter := 'DATA = '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpBuscaData.Date)) + ' AND ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%')
+    if dtpDataInicial.Date <= dtpDataFinal.Date then
+    begin
+        dm.cdsMonitoramento.Filtered := False;
+        if edtBuscaRota.Text <> '' then
+           dm.cdsMonitoramento.Filter := 'DATA >= '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataInicial.Date)) + ' AND DATA <= ' + QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataFinal.Date)) + ' AND ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%')
+        else
+          dm.cdsMonitoramento.Filter := 'DATA >= '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataInicial.Date)) + ' AND DATA <= ' + QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataFinal.Date));
+        dm.cdsMonitoramento.Filtered := true;
+    end
     else
-      dm.cdsMonitoramento.Filter := 'DATA = '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpBuscaData.Date));
-    dm.cdsMonitoramento.Filtered := true;
+      MessageDlg('A data inicial dever ser menor que a data final!', mtError, [mbOK], 0);
+end;
+
+procedure TForm2.dtpDataInicialChange(Sender: TObject);
+begin
+    if dtpDataInicial.Date <= dtpDataFinal.Date then
+    begin
+        dm.cdsMonitoramento.Filtered := False;
+        if edtBuscaRota.Text <> '' then
+           dm.cdsMonitoramento.Filter := 'DATA >= '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataInicial.Date)) + ' AND DATA <= ' + QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataFinal.Date)) + ' AND ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%')
+        else
+          dm.cdsMonitoramento.Filter := 'DATA >= '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataInicial.Date)) + ' AND DATA <= ' + QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataFinal.Date));
+        dm.cdsMonitoramento.Filtered := true;
+    end
+    else
+      MessageDlg('A data inicial dever ser menor que a data final!', mtError, [mbOK], 0);
 end;
 
 procedure TForm2.edtBuscaRotaChange(Sender: TObject);
 begin
+    dm.cdsMonitoramento.Filtered := False;
     if edtBuscaRota.Text <> '' then
-    begin
-        dm.cdsMonitoramento.Filtered := False;
-        dm.cdsMonitoramento.Filter   := 'ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%');
-        dm.cdsMonitoramento.Filtered := true;
-    end;
+       dm.cdsMonitoramento.Filter := 'DATA >= '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataInicial.Date)) + ' AND DATA <= ' + QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataFinal.Date)) + ' AND ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%')
+    else
+      dm.cdsMonitoramento.Filter := 'DATA >= '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataInicial.Date)) + ' AND DATA <= ' + QuotedStr(FormatDateTime('dd/mm/yyyy', dtpDataFinal.Date));
+    dm.cdsMonitoramento.Filtered := true;
 end;
 
 procedure TForm2.Edit2Enter(Sender: TObject);
