@@ -164,6 +164,9 @@ var
 begin
     if Assigned(Form2) then
     begin
+        if cdsMonitoramento.State in [dsInsert] then
+           dm.cdsMonitoramento.FieldByName('DATA_FORMATO').AsDateTime := Date;
+
         if dm.cdsMonitoramento.FieldByName('STATUS').AsString = 'FINALIZADO' then
         begin
              try

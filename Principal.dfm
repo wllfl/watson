@@ -1,6 +1,6 @@
 object Form1: TForm1
-  Left = 99
-  Top = 704
+  Left = 325
+  Top = 184
   Caption = 'SISTEMA DE MONITORAMENTO TKL'
   ClientHeight = 704
   ClientWidth = 1348

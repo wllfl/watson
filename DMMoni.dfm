@@ -1,7 +1,7 @@
 object dm: Tdm
   OldCreateOrder = False
-  Left = 796
-  Top = 261
+  Left = 320
+  Top = 92
   Height = 502
   Width = 583
   object SQLConnection1: TSQLConnection
@@ -180,7 +180,7 @@ object dm: Tdm
   end
   object dtsMonitoramento: TDataSource
     DataSet = cdsMonitoramento
-    Left = 240
+    Left = 328
     Top = 120
   end
   object cdsMonitoramento: TClientDataSet
@@ -188,7 +188,7 @@ object dm: Tdm
     Params = <>
     ProviderName = 'dspMonitoramento'
     BeforeApplyUpdates = cdsMonitoramentoBeforeApplyUpdates
-    Left = 112
+    Left = 224
     Top = 120
     object cdsMonitoramentoROTA: TStringField
       FieldName = 'ROTA'
@@ -290,7 +290,7 @@ object dm: Tdm
   end
   object dspMonitoramento: TDataSetProvider
     DataSet = qryMonitoramento
-    Left = 184
+    Left = 128
     Top = 120
   end
   object qryControle: TSQLQuery
@@ -325,14 +325,14 @@ object dm: Tdm
   end
   object dspControle: TDataSetProvider
     DataSet = qryControle
-    Left = 168
+    Left = 120
     Top = 176
   end
   object cdsControle: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspControle'
-    Left = 104
+    Left = 216
     Top = 176
     object cdsControleid: TIntegerField
       FieldName = 'id'
@@ -352,10 +352,11 @@ object dm: Tdm
   end
   object dtsControle: TDataSource
     DataSet = cdsControle
-    Left = 240
+    Left = 328
     Top = 176
   end
   object qryRota: TSQLQuery
+    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -381,7 +382,7 @@ object dm: Tdm
       '')
     SQLConnection = SQLConnection1
     Left = 40
-    Top = 232
+    Top = 240
     object qryRotaID: TIntegerField
       FieldName = 'ID'
     end
@@ -443,10 +444,11 @@ object dm: Tdm
     end
   end
   object cdsRota: TClientDataSet
+    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'dspRota'
-    Left = 104
+    Left = 216
     Top = 240
     object cdsRotaID: TIntegerField
       FieldName = 'ID'
@@ -510,12 +512,12 @@ object dm: Tdm
   end
   object dspRota: TDataSetProvider
     DataSet = qryRota
-    Left = 176
+    Left = 120
     Top = 240
   end
   object dtsRota: TDataSource
     DataSet = cdsRota
-    Left = 240
+    Left = 328
     Top = 240
   end
   object QryAula: TSQLQuery
@@ -529,19 +531,19 @@ object dm: Tdm
   end
   object dsAula: TDataSource
     DataSet = cdsAula
-    Left = 232
+    Left = 320
     Top = 56
   end
   object cdsAula: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspAula'
-    Left = 104
+    Left = 216
     Top = 56
   end
   object dspAula: TDataSetProvider
     DataSet = QryAula
-    Left = 176
+    Left = 128
     Top = 56
   end
   object dtsRelatorio: TDataSource
@@ -624,14 +626,14 @@ object dm: Tdm
   object dspRelator: TDataSetProvider
     DataSet = qryRelator
     Left = 120
-    Top = 368
+    Top = 384
   end
   object cdsRelator: TClientDataSet
     Aggregates = <>
     Params = <>
     ProviderName = 'dspRelator'
     Left = 208
-    Top = 368
+    Top = 384
     object cdsRelatoratraso: TStringField
       FieldName = 'atraso'
       Size = 10
@@ -655,8 +657,8 @@ object dm: Tdm
   end
   object dstRelator: TDataSource
     DataSet = cdsRelator
-    Left = 296
-    Top = 368
+    Left = 312
+    Top = 384
   end
   object qryRelator: TSQLQuery
     MaxBlobSize = -1
@@ -666,8 +668,8 @@ object dm: Tdm
         'SELECT atraso, rota, data,cod_atraso,obs  FROM monitoramento WHE' +
         'RE 1 = 1')
     SQLConnection = SQLConnection1
-    Left = 48
-    Top = 376
+    Left = 40
+    Top = 384
     object qryRelatoratraso: TStringField
       FieldName = 'atraso'
       Size = 10

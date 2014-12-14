@@ -47,6 +47,9 @@ type
     procedure Edit1Change(Sender: TObject);
     procedure Button3Click(Sender: TObject);
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
+    procedure FormCreate(Sender: TObject);
+    procedure FormClose(Sender: TObject; var Action: TCloseAction);
+    procedure CarregarRotas();
   private
     { Private declarations }
   public
@@ -63,15 +66,15 @@ uses DMMoni, Monitor;
 {$R *.dfm}
 
 procedure TForm4.Button1Click(Sender: TObject);
-
-        begin
-            dm.cdsRota.Post;
-            dm.cdsRota.ApplyUpdates(0);
-            dm.cdsRota.Refresh;
-        end;
-    procedure TForm4.Button2Click(Sender: TObject);
 begin
-CLOSE;
+    dm.cdsRota.Post;
+    dm.cdsRota.ApplyUpdates(0);
+    dm.cdsRota.Refresh;
+end;
+
+procedure TForm4.Button2Click(Sender: TObject);
+begin
+    Close;
 end;
 
 procedure TForm4.Button3Click(Sender: TObject);
@@ -87,18 +90,46 @@ begin
    dbedit9.Clear;
 end;
 
+procedure TForm4.CarregarRotas;
+begin
+    try
+       dm.cdsRota.Close;
+       dm.qryRota.Close;
+       dm.qryRota.SQL.Clear;
+       dm.qryRota.SQL.Add('SELECT r.ID, r.ROTA, r.CLIENTE, r.ORIGEM, r.DESTINO, r.HORA_INICIO,r.HORA_REAL, r.HORA_FIM,r.HORA_REAL_FIM,r.COD_ATRASO,r.OBS, r.STATUS,r.CAMINHAO,r.PLACA,r.MOTORISTA FROM rota r ');
+       dm.qryRota.SQL.Add('WHERE STATUS = :status');
+       dm.qryRota.ParamByName('status').AsString := 'ATIVO';
+       dm.qryRota.Open;
+       dm.cdsRota.Open;
+    except
+         on E:Exception do
+         MessageDlg('Erro ao carregar registros: ' + E.Message, mtError, [mbOK], 0);
+    end;
+end;
+
 procedure TForm4.DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
 begin
- dm.cdsrota.Open;
+  dm.cdsrota.Open;
 end;
 
 procedure TForm4.Edit1Change(Sender: TObject);
 begin
 begin
-dm.cdsrota.Filtered := False;
-dm.cdsrota.Filter := 'ROTA LIKE '+QuotedStr(Edit1.text+'%');
-dm.cdsrota.Filtered := true;
+  dm.cdsrota.Filtered := False;
+  dm.cdsrota.Filter := 'ROTA LIKE '+QuotedStr(Edit1.text+'%');
+  dm.cdsrota.Filtered := true;
 end;
+end;
+
+procedure TForm4.FormClose(Sender: TObject; var Action: TCloseAction);
+begin
+     dm.qryRota.Close;
+     dm.cdsRota.Close;
+end;
+
+procedure TForm4.FormCreate(Sender: TObject);
+begin
+    Self.CarregarRotas;
 end;
 
 end.

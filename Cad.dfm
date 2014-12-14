@@ -1,6 +1,6 @@
 object Form2: TForm2
-  Left = 474
-  Top = 212
+  Left = 183
+  Top = 172
   Caption = 'CADASTRO DE ROTA'
   ClientHeight = 698
   ClientWidth = 1446

@@ -1,9 +1,9 @@
 object Form4: TForm4
-  Left = 132
-  Top = 233
+  Left = 632
+  Top = 381
   Caption = 'CADASTRO DE ROTA'
-  ClientHeight = 554
-  ClientWidth = 1187
+  ClientHeight = 701
+  ClientWidth = 1368
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,9 @@ object Form4: TForm4
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
+  OnClose = FormClose
+  OnCreate = FormCreate
   PixelsPerInch = 96
   TextHeight = 13
   object Image1: TImage

@@ -254,9 +254,9 @@ end;
 procedure TForm2.Button8Click(Sender: TObject);
 begin
   if dm.cdsMonitoramento.State in [dsBrowse] then
-    begin
-        dm.cdsMonitoramento.Append;
-    end;
+  begin
+      dm.cdsMonitoramento.Append;
+  end;
 end;
 
 procedure TForm2.Button9Click(Sender: TObject);
