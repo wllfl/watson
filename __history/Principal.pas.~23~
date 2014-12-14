@@ -1,0 +1,113 @@
+unit Principal;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, StdCtrls, jpeg, ExtCtrls, SqlExpr;
+
+type
+  TForm1 = class(TForm)
+    btnAcesso: TButton;
+    Image1: TImage;
+    lblStatus: TLabel;
+    procedure btnAcessoClick(Sender: TObject);
+    procedure FormShow(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  Form1: TForm1;
+
+implementation
+
+uses Cad, DMMoni;
+
+{$R *.dfm}
+
+procedure TForm1.btnAcessoClick(Sender: TObject);
+begin
+    try
+      Form2 := TForm2.Create(self);
+      Form2.ShowModal;
+    finally
+       FreeAndNil(Form2);
+    end;
+end;
+
+procedure TForm1.FormShow(Sender: TObject);
+var
+   qry: TSQLQuery;
+begin
+    btnAcesso.Visible := false;
+    lblStatus.Font.Color := clGreen;
+    lblStatus.Caption := 'Iniciando varredura de rotas diárias ...';
+    Self.Refresh;
+
+    try
+        try
+           qry := TSQLQuery.Create(nil);
+           qry.SQLConnection := dm.SQLConnection1;
+
+           dm.cdsMonitoramento.Close;
+           dm.cdsRota.Close;
+           dm.qryRota.Close;
+           dm.qryRota.SQL.Clear;
+           dm.qryRota.SQL.Add('SELECT r.ID, r.ROTA, r.CLIENTE, r.ORIGEM, r.DESTINO, r.HORA_INICIO,r.HORA_REAL, r.HORA_FIM,r.HORA_REAL_FIM, r.STATUS FROM rota r ');
+           dm.qryRota.SQL.Add('WHERE STATUS = :status AND ID NOT IN (SELECT ID_ROTA FROM monitoramento WHERE DATA =:data)');
+           dm.qryRota.ParamByName('status').AsString := 'ATIVO';
+           dm.qryRota.ParamByName('data').AsString := FormatDateTime('dd/mm/yyyy', Now);
+           dm.qryRota.Open;
+           dm.cdsRota.Open;
+
+           if not dm.cdsRota.IsEmpty then
+           begin
+                lblStatus.Caption := 'Inserindo rotas diárias ...';
+                Self.Refresh;
+                dm.cdsRota.First;
+                while not dm.cdsRota.Eof do
+                begin
+                   qry.Close;
+                   qry.SQL.Clear;
+                   qry.SQL.Add('INSERT INTO monitoramento (ROTA, DATA, CLIENTE, ORIGEM, DESTINO, HORA_INI,HORA_REAL, ID_ROTA, HORA_FIM,HORA_REAL_FIM, STATUS)VALUES');
+                   qry.SQL.Add('(:rota, :data, :cliente, :origem, :destino, :hora_ini,:hora_real, :id_rota, :hora_fim,:hora_real_fim, :status)');
+                   qry.ParamByName('rota').AsString := dm.cdsRota.FieldByName('ROTA').AsString;
+                   qry.ParamByName('data').AsString := FormatDateTime('dd/mm/yyyy', Now);
+                   qry.ParamByName('cliente').AsString := dm.cdsRota.FieldByName('CLIENTE').AsString;
+                   qry.ParamByName('origem').AsString := dm.cdsRota.FieldByName('ORIGEM').AsString;
+                   qry.ParamByName('destino').AsString := dm.cdsRota.FieldByName('DESTINO').AsString;
+                   qry.ParamByName('hora_ini').AsString := dm.cdsRota.FieldByName('HORA_INICIO').AsString;
+                   qry.ParamByName('hora_real').AsString := dm.cdsRota.FieldByName('HORA_REAL').AsString;
+                   qry.ParamByName('id_rota').AsInteger := dm.cdsRota.FieldByName('ID').AsInteger;
+                   qry.ParamByName('hora_fim').AsString := dm.cdsRota.FieldByName('HORA_FIM').AsString;
+                   qry.ParamByName('hora_real_fim').AsString := dm.cdsRota.FieldByName('HORA_REAL_FIM').AsString;
+                   qry.ParamByName('status').AsString := 'AGUARDANDO';
+                   qry.ExecSQL();
+
+                   dm.cdsRota.Next;
+                end;
+
+                lblStatus.Caption := 'Finalizado ...';
+                Self.Refresh;
+           end
+           else
+           begin
+               lblStatus.Font.Color := clRed;
+               lblStatus.Caption := 'Não existem rotas diárias para serem inseridas!';
+               Self.Refresh;
+           end;
+           dm.cdsMonitoramento.Open;
+           btnAcesso.Visible := true;
+        except
+            on E:Exception do
+            MessageDlg('Erro ao executar varredura: ' + E.Message, mtError, mbOKCancel, 0);
+        end;
+    finally
+         FreeAndNil(qry);
+    end;
+end;
+
+end.

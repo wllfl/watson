@@ -1,0 +1,20 @@
+program Monitoramento;
+
+uses
+  Forms,
+  Principal in 'Principal.pas' {Form1},
+  Cad in 'Cad.pas' {Form2},
+  DMMoni in 'DMMoni.pas' {DataModule3: TDataModule},
+  Monitor in 'Monitor.pas' {Form3};
+
+{$R *.res}
+
+begin
+  Application.Initialize;
+  Application.MainFormOnTaskbar := True;
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TDataModule3, DataModule3);
+  Application.CreateForm(TForm3, Form3);
+  Application.Run;
+end.
