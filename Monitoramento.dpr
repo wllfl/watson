@@ -16,7 +16,5 @@ begin
   Application.MainFormOnTaskbar := True;
   Application.CreateForm(Tdm, dm);
   Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TForm4, Form4);
-  Application.CreateForm(Tconsultar, consultar);
   Application.Run;
 end.

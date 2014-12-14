@@ -1,9 +1,9 @@
 object dm: Tdm
   OldCreateOrder = False
-  Left = 396
-  Top = 171
-  Height = 441
-  Width = 477
+  Left = 796
+  Top = 261
+  Height = 502
+  Width = 583
   object SQLConnection1: TSQLConnection
     ConnectionName = 'MySQLConnection'
     DriverName = 'MySQL'
@@ -11,13 +11,29 @@ object dm: Tdm
     LibraryName = 'dbxmys.dll'
     LoginPrompt = False
     Params.Strings = (
+      'DriverUnit=DBXMySQL'
+      
+        'DriverPackageLoader=TDBXDynalinkDriverLoader,DbxCommonDriver150.' +
+        'bpl'
+      
+        'DriverAssemblyLoader=Borland.Data.TDBXDynalinkDriverLoader,Borla' +
+        'nd.Data.DbxCommonDriver,Version=15.0.0.0,Culture=neutral,PublicK' +
+        'eyToken=91d62ebb5b0d1b1b'
+      
+        'MetaDataPackageLoader=TDBXMySqlMetaDataCommandFactory,DbxMySQLDr' +
+        'iver150.bpl'
+      
+        'MetaDataAssemblyLoader=Borland.Data.TDBXMySqlMetaDataCommandFact' +
+        'ory,Borland.Data.DbxMySQLDriver,Version=15.0.0.0,Culture=neutral' +
+        ',PublicKeyToken=91d62ebb5b0d1b1b'
+      'MaxBlobSize=-1'
       'GetDriverFunc=getSQLDriverMYSQL50'
       'LibraryName=dbxopenmysql50.dll'
       'VendorLib=libmysql.dll'
       'HostName=localhost'
-      'Database=mysql'
+      'Database=monitoramento'
       'User_Name=root'
-      'Password=loide'
+      'Password=011224'
       'BlobSize=-1'
       'ErrorResourceFile='
       'LocaleCode=0000'
@@ -32,7 +48,6 @@ object dm: Tdm
     Top = 8
   end
   object qryMonitoramento: TSQLQuery
-    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -169,7 +184,6 @@ object dm: Tdm
     Top = 120
   end
   object cdsMonitoramento: TClientDataSet
-    Active = True
     Aggregates = <>
     Params = <>
     ProviderName = 'dspMonitoramento'
@@ -280,7 +294,6 @@ object dm: Tdm
     Top = 120
   end
   object qryControle: TSQLQuery
-    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -343,7 +356,6 @@ object dm: Tdm
     Top = 176
   end
   object qryRota: TSQLQuery
-    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -507,7 +519,6 @@ object dm: Tdm
     Top = 240
   end
   object QryAula: TSQLQuery
-    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -576,7 +587,6 @@ object dm: Tdm
   end
   object qryRelatorio: TSQLQuery
     GetMetadata = True
-    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (
@@ -649,7 +659,6 @@ object dm: Tdm
     Top = 368
   end
   object qryRelator: TSQLQuery
-    Active = True
     MaxBlobSize = -1
     Params = <>
     SQL.Strings = (

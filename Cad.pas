@@ -39,7 +39,7 @@ type
     Label11: TLabel;
     Label12: TLabel;
     Button4: TButton;
-    Edit1: TEdit;
+    edtBuscaRota: TEdit;
     Label13: TLabel;
     DBEdit1: TDBEdit;
     DBEdit9: TDBEdit;
@@ -67,10 +67,10 @@ type
     DBRadioGroup3: TDBRadioGroup;
     Button8: TButton;
     Button9: TButton;
-    Edit2: TEdit;
     Label9: TLabel;
     DBEdit5: TDBEdit;
     DBEdit15: TDBEdit;
+    dtpBuscaData: TDateTimePicker;
     procedure DBNavigator1Click(Sender: TObject; Button: TNavigateBtn);
     procedure sairClick(Sender: TObject);
     procedure DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
@@ -82,15 +82,15 @@ type
     procedure FormCreate(Sender: TObject);
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure Button4Click(Sender: TObject);
-    procedure Edit1Change(Sender: TObject);
+    procedure edtBuscaRotaChange(Sender: TObject);
     procedure Button5Click(Sender: TObject);
     procedure Edit2Enter(Sender: TObject);
     procedure Button6Click(Sender: TObject);
     procedure Button7Click(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure Button8Click(Sender: TObject);
-    procedure Edit2Change(Sender: TObject);
     procedure Button9Click(Sender: TObject);
+    procedure dtpBuscaDataChange(Sender: TObject);
   private
     { Private declarations }
   public
@@ -266,18 +266,18 @@ end;
 
 procedure TForm2.DBGrid1DrawColumnCell(Sender: TObject; const Rect: TRect;
   DataCol: Integer; Column: TColumn; State: TGridDrawState);
-           begin
-
-           if (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_INI').AsString) <= Time) and
-           (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_FIM').AsString) <= Time) then
-
+begin
+    if not dm.cdsMonitoramento.IsEmpty then
+    begin
+        if (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_INI').AsString) <= Time) and (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_FIM').AsString) <= Time) then
            DBGrid1.Canvas.Brush.Color:= clgreen
-    else     DBGrid1.Canvas.Brush.Color:= clwhite;
+        else
+           DBGrid1.Canvas.Brush.Color:= clwhite;
 
-
-    DBGrid1.Canvas.Font.Color:= clWindowText;
-    DBGrid1.Canvas.FillRect(Rect);
-    DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+        DBGrid1.Canvas.Font.Color:= clWindowText;
+        DBGrid1.Canvas.FillRect(Rect);
+        DBGrid1.DefaultDrawColumnCell(Rect, DataCol, Column, State);
+    end;
   end;
 
 
@@ -289,18 +289,24 @@ DMMoni.dm.cdsMonitoramento.Insert;
 DMMoni.dm.cdsMonitoramento.Refresh;
 end;
 
-procedure TForm2.Edit1Change(Sender: TObject);
+procedure TForm2.dtpBuscaDataChange(Sender: TObject);
 begin
-dm.cdsMonitoramento.Filtered := False;
-dm.cdsMonitoramento.Filter := 'ROTA LIKE '+QuotedStr(Edit1.text+'%') + ' AND data = ' + QuotedStr(FormatDateTime('dd/mm/yyyy', date));
-dm.cdsMonitoramento.Filtered := true;
+    dm.cdsMonitoramento.Filtered := False;
+    if edtBuscaRota.Text <> '' then
+       dm.cdsMonitoramento.Filter := 'DATA = '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpBuscaData.Date)) + ' AND ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%')
+    else
+      dm.cdsMonitoramento.Filter := 'DATA = '+ QuotedStr(FormatDateTime('dd/mm/yyyy', dtpBuscaData.Date));
+    dm.cdsMonitoramento.Filtered := true;
 end;
 
-procedure TForm2.Edit2Change(Sender: TObject);
+procedure TForm2.edtBuscaRotaChange(Sender: TObject);
 begin
-dm.cdsMonitoramento.Filtered := False;
-dm.cdsMonitoramento.Filter := 'DATA LIKE '+QuotedStr(Edit2.text+'%');
-dm.cdsMonitoramento.Filtered := true;
+    if edtBuscaRota.Text <> '' then
+    begin
+        dm.cdsMonitoramento.Filtered := False;
+        dm.cdsMonitoramento.Filter   := 'ROTA LIKE ' + QuotedStr(edtBuscaRota.text+'%');
+        dm.cdsMonitoramento.Filtered := true;
+    end;
 end;
 
 procedure TForm2.Edit2Enter(Sender: TObject);
@@ -324,23 +330,18 @@ close;
 end;
 
 procedure TForm2.Timer1Timer(Sender: TObject);
-           begin
+begin
+   if (not dm.cdsMonitoramento.IsEmpty) and (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_INI').AsString) <= Time) then
+   begin
+      DBGrid1.Canvas.Brush.Color:= clgreen;
+      DBGrid1.Canvas.Brush.Color:= clwhite;
+   end;
 
-           if (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_INI').AsString) <= Time) then
-
-            DBGrid1.Canvas.Brush.Color:= clgreen;
-            DBGrid1.Canvas.Brush.Color:= clwhite;
-            begin
-             if (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_FIM').AsString) <= Time) then
-
-             DBGrid1.Canvas.Brush.Color:= clred ;
-             DBGrid1.Canvas.Brush.Color:= clwhite;
-
-
-    DBGrid1.Canvas.Font.Color:= clWindowText;
-   // DBGrid1.Canvas.FillRect(Rect);
-    //DBGrid1.DefaultDrawColumnCell(Rect);
-
-end;
+   if (not dm.cdsMonitoramento.IsEmpty) and (StrToTime(dm.cdsMonitoramento.FieldByName('HORA_FIM').AsString) <= Time) then
+   begin
+      DBGrid1.Canvas.Brush.Color:= clred ;
+      DBGrid1.Canvas.Brush.Color:= clwhite;
+      DBGrid1.Canvas.Font.Color:= clWindowText;
+   end;
 end;
 end.

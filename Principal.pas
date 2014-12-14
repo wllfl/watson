@@ -31,8 +31,8 @@ uses Cad, DMMoni;
 procedure TForm1.btnAcessoClick(Sender: TObject);
 begin
     try
-      Form2 := TForm2.Create(self);
-      Form2.ShowModal;
+        Form2 := TForm2.Create(self);
+        Form2.ShowModal;
     finally
        FreeAndNil(Form2);
     end;
@@ -72,8 +72,8 @@ begin
                 begin
                    qry.Close;
                    qry.SQL.Clear;
-                   qry.SQL.Add('INSERT INTO monitoramento (ROTA, DATA, CLIENTE, ORIGEM, DESTINO, HORA_INI,HORA_REAL, ID_ROTA, HORA_FIM,HORA_REAL_FIM,COD_ATRASO,OBS, STATUS,CAMINHAO,PLACA,MOTORISTA)VALUES');
-                   qry.SQL.Add('(:rota, :data, :cliente, :origem, :destino, :hora_ini,:hora_real, :id_rota, :hora_fim,:hora_real_fim,:cod_atraso,:obs, :status,:caminhao,:placa,:motorista)');
+                   qry.SQL.Add('INSERT INTO monitoramento (ROTA, DATA, CLIENTE, ORIGEM, DESTINO, HORA_INI,HORA_REAL, ID_ROTA, HORA_FIM,HORA_REAL_FIM,COD_ATRASO,OBS, STATUS,CAMINHAO,PLACA,MOTORISTA, DATA_FORMATO)VALUES');
+                   qry.SQL.Add('(:rota, :data, :cliente, :origem, :destino, :hora_ini,:hora_real, :id_rota, :hora_fim,:hora_real_fim,:cod_atraso,:obs, :status,:caminhao,:placa,:motorista, :data_formato)');
                    qry.ParamByName('rota').AsString := dm.cdsRota.FieldByName('ROTA').AsString;
                    qry.ParamByName('data').AsString := FormatDateTime('dd/mm/yyyy', Now);
                    qry.ParamByName('cliente').AsString := dm.cdsRota.FieldByName('CLIENTE').AsString;
@@ -89,6 +89,7 @@ begin
                    qry.ParamByName('caminhao').AsString := dm.cdsRota.FieldByName('CAMINHAO').AsString;
                    qry.ParamByName('placa').AsString := dm.cdsRota.FieldByName('PLACA').AsString;
                    qry.ParamByName('motorista').AsString := dm.cdsRota.FieldByName('MOTORISTA').AsString;
+                   qry.ParamByName('data_formato').AsDate := Date;
                    qry.ParamByName('status').AsString := 'EM ANDAMENTO';
                    qry.ExecSQL();
 

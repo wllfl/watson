@@ -1,9 +1,9 @@
 object Form1: TForm1
-  Left = 374
-  Top = 180
+  Left = 99
+  Top = 704
   Caption = 'SISTEMA DE MONITORAMENTO TKL'
-  ClientHeight = 460
-  ClientWidth = 656
+  ClientHeight = 704
+  ClientWidth = 1348
   Color = clBtnHighlight
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object Form1: TForm1
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   OnShow = FormShow
   PixelsPerInch = 96
   TextHeight = 13

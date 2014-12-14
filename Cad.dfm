@@ -1,9 +1,9 @@
 object Form2: TForm2
-  Left = 387
-  Top = 111
+  Left = 474
+  Top = 212
   Caption = 'CADASTRO DE ROTA'
-  ClientHeight = 441
-  ClientWidth = 668
+  ClientHeight = 698
+  ClientWidth = 1446
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -11,6 +11,7 @@ object Form2: TForm2
   Font.Name = 'Tahoma'
   Font.Style = []
   OldCreateOrder = False
+  Position = poDesktopCenter
   OnClose = FormClose
   OnCreate = FormCreate
   PixelsPerInch = 96
@@ -1590,7 +1591,7 @@ object Form2: TForm2
     end
     object Button1: TButton
       Left = 265
-      Top = 232
+      Top = 229
       Width = 121
       Height = 25
       Caption = 'MONITORAMENTO'
@@ -1675,21 +1676,21 @@ object Form2: TForm2
     end
     object Button4: TButton
       Left = 180
-      Top = 230
+      Top = 229
       Width = 79
       Height = 27
       Caption = 'CADAST ROTA'
       TabOrder = 13
       OnClick = Button4Click
     end
-    object Edit1: TEdit
+    object edtBuscaRota: TEdit
       Left = 550
       Top = 231
       Width = 88
       Height = 21
       CharCase = ecUpperCase
       TabOrder = 14
-      OnChange = Edit1Change
+      OnChange = edtBuscaRotaChange
     end
     object DBEdit1: TDBEdit
       Left = 127
@@ -1711,7 +1712,7 @@ object Form2: TForm2
     end
     object Button5: TButton
       Left = 392
-      Top = 234
+      Top = 229
       Width = 121
       Height = 25
       Caption = 'EXPORTAR EXEL'
@@ -1826,14 +1827,6 @@ object Form2: TForm2
       Visible = False
       OnClick = Button8Click
     end
-    object Edit2: TEdit
-      Left = 656
-      Top = 232
-      Width = 121
-      Height = 21
-      TabOrder = 28
-      OnChange = Edit2Change
-    end
     object DBEdit5: TDBEdit
       Left = 432
       Top = 97
@@ -1841,7 +1834,7 @@ object Form2: TForm2
       Height = 21
       DataField = 'OBS'
       DataSource = dm.dtsMonitoramento
-      TabOrder = 29
+      TabOrder = 28
     end
     object DBEdit15: TDBEdit
       Left = 581
@@ -1850,8 +1843,18 @@ object Form2: TForm2
       Height = 21
       DataField = 'OBS1'
       DataSource = dm.dtsMonitoramento
-      MaxLength = 50
+      TabOrder = 29
+    end
+    object dtpBuscaData: TDateTimePicker
+      Left = 656
+      Top = 231
+      Width = 105
+      Height = 21
+      Cursor = crHandPoint
+      Date = 41987.793260081020000000
+      Time = 41987.793260081020000000
       TabOrder = 30
+      OnChange = dtpBuscaDataChange
     end
   end
   object DBGrid1: TDBGrid
@@ -1888,13 +1891,11 @@ object Form2: TForm2
       item
         Expanded = False
         FieldName = 'DESTINO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'CHEGADA_REAL'
-        Width = 64
         Visible = True
       end
       item
@@ -1915,31 +1916,26 @@ object Form2: TForm2
       item
         Expanded = False
         FieldName = 'HORA_REAL_FIM'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'COD_ATRASO'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'OBS'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'STATUS'
-        Width = 64
         Visible = True
       end
       item
         Expanded = False
         FieldName = 'CAMINHAO'
-        Width = 64
         Visible = True
       end
       item
@@ -1950,7 +1946,6 @@ object Form2: TForm2
       item
         Expanded = False
         FieldName = 'MOTORISTA'
-        Width = 64
         Visible = True
       end
       item
@@ -12031,6 +12026,8 @@ object Form2: TForm2
     Top = 24
   end
   object Timer1: TTimer
+    Enabled = False
+    Interval = 30000
     OnTimer = Timer1Timer
     Left = 552
     Top = 24
